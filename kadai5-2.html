@@ -6,7 +6,7 @@
 <body>
     <h1 id="msg">何かのAPI</h1>
     <form name="apiform"><p>
-        何かのフォーム：<input type="text" name="form_data">
+        人物名：<input type="text" name="form_data">
         <button type="button" id="btn1" onclick="some_api(this.form)">実行</button>
     </p></form>
     
@@ -14,7 +14,15 @@
     <script>
         async function some_api(myForm) {
             // ここにコードを書く
-            document.getElementById("result").innerHTML += myForm.form_data.value+"<br />";
+            //↓参照ページ
+            //https://www.umayadia.com/Note/Note028WebAPISample.htm
+            const endpoint = "https://umayadia-apisample.azurewebsites.net/api/persons/";
+            fetch(endpoint + myForm.form_data.value)
+                .then(response => {
+                    return response.json();
+                }).then(data => {
+                    document.getElementById("result").innerHTML = data.data.note;
+                });
             document.apiform.reset();
         }
     </script>
